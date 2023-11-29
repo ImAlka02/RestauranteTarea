@@ -1,0 +1,25 @@
+﻿@model RestauranteTarea.Models.ViewModels.MenuViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="menu3">
+
+    <div>
+        <h1>NUESTRO MENÚ</h1>
+        @foreach (var t in Model.Tipos)
+        {
+            <h3>@t.Tipo</h3>
+            @foreach (var h in t.Hamburguesas)
+            {
+
+                <h2 @(Model.Hamburguesa.Id == h.Id ? "class=seleccionado" : string.Empty)>
+                    <a href="~/Home/Menu/@h.Nombre.Replace(" ", "-")"><span>@h.Nombre</span> <span class="price">@h.Precio.ToString("c")</span></a></h2>
+            }
+        }
+    </div>
+    <div>
+        <img src="~/hamburguesas/@(Model.Hamburguesa.Id).png" />
+        <p>@Model.Hamburguesa.Descripción</p>
+    </div>
+</section>
+

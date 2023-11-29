@@ -1,0 +1,31 @@
+﻿@model RestauranteTarea.Areas.Admin.Models.AddPromoAdminViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "AgregarPromocion";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<form>
+    <h1>Agregar un descuento de promoción</h1>
+    <input type="hidden" asp-for="Id" />
+    <span>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required asp-for="Nombre">
+    </span>
+    <span>
+        <label for="precio">Precio real:</label>
+        <input type="text" id="precio" required >
+    </span>
+    <span>
+        <label for="promocion">Precio promoción:</label>
+        <input type="text" id="promocion" required>
+    </span>
+    <span class="error">Area de errores</span>
+
+    <div class="botones">
+        <input type="submit" value="Agregar" />
+        <a href="menu.html">
+            <input type="button" value="Cancelar" />
+        </a>
+    </div>
+</form>

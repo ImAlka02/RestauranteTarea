@@ -1,18 +1,25 @@
-﻿namespace RestauranteTarea.Models.ViewModels
+﻿using RestauranteTarea.Models.Entities;
+
+namespace RestauranteTarea.Models.ViewModels
 {
     public class MenuViewModel
     {
-        public HamburguesaModel Hamburguesa { get; set; }
-        public IEnumerable<ClasificacionViewModel> Clasificaciones { get; set; } = null!;
+        public Menu Hamburguesa { get; set; } = null!;
+        public IEnumerable<TipoModel> Tipos { get; set; } = null!;
+
     }
 
+    public class TipoModel
+    {
+        public string Tipo { get; set; } = null!;
+        public IEnumerable<HamburguesaModel> Hamburguesas { get; set; } = null!;
+    }
     public class HamburguesaModel
     {
         public int Id { get; set; }
         public string Nombre { get; set; } = null!;
-        public string Descripcion { get; set; } = null!;
-        public bool Seleccionado { get; set; }
         public decimal Precio { get; set; }
-
     }
+
+    
 }

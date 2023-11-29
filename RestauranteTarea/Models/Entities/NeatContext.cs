@@ -19,6 +19,7 @@ public partial class NeatContext : DbContext
 
     public virtual DbSet<Menu> Menu { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
