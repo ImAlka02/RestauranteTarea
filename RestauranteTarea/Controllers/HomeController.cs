@@ -46,9 +46,38 @@ namespace RestauranteTarea.Controllers
             return View(vm);
         }
 
-        public IActionResult Promociones()
+        public IActionResult Promociones(int Id)
         {
-            return View();
+            PromoViewModel vm = new PromoViewModel();
+            var ListaPromo = menuRepository.GetAll().Where(x => x.PrecioPromocion != null && x.Id != Id);
+            var next = ListaPromo.Skip(1).Take(1).First();
+            var last = ListaPromo.Last();
+
+            if(Id == 0)
+            {
+                
+                var lol = menuRepository.GetAll().Where(x => x.PrecioPromocion != null).FirstOrDefault();
+                vm.Id = lol.Id;
+                vm.Nombre = lol.Nombre;
+                vm.PrecioPromo = (decimal?)lol.PrecioPromocion;
+                vm.Precio = (decimal)lol.Precio;
+                vm.Descripcion = lol.Descripción;
+                vm.IdPrev = last.Id;
+                vm.IdNext = next.Id;
+                return View(vm);
+            }
+            var Este = menuRepository.Get(Id);
+            vm.Id = Este.Id;
+            vm.Nombre = Este.Nombre;
+            vm.PrecioPromo = (decimal?)Este.PrecioPromocion;
+            vm.Precio = (decimal)Este.Precio;
+            vm.Descripcion = Este.Descripción;
+            vm.IdPrev = last.Id;
+            vm.IdNext = next.Id;
+
+
+
+            return View(vm);
         }
     }
 }

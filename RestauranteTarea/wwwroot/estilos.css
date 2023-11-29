@@ -63,7 +63,7 @@ main {
 
 .menu1 {
     background-color: #c25108;
-    height: calc(100% - 118px);
+    height: 100%;
     position: relative;
     overflow: hidden;
 }

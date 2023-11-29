@@ -17,28 +17,28 @@
                 } else
                 {
 
-                    <h2><del>@h.Precio.ToString("c")</del><br />@h.PrecioPromocion</h2>
+                    <h2><del>@h.Precio.ToString("c")</del><br />@h.PrecioPromocion?.ToString("c")</h2>
                 }
                 <p>
                    @h.Descripción
                 </p>
 
                 <span class="acciones">
-                    <a href="~/Home/Editar/@h.Id">Editar</a>
-                    <a href="~/Home/Eliminar/@h.Id">Eliminar</a>
+                    <a href="~/Admin/Home/Editar/@h.Id">Editar</a>
+                    <a href="~/Admin/Home/Eliminar/@h.Id">Eliminar</a>
                     @if (h.PrecioPromocion == null)
                     {
-                        <a href="~/Home/AgregarPromocion/@h.Id">Agregar promoción</a>
+                        <a href="~/Admin/Home/AgregarPromocion/@h.Id">Agregar promoción</a>
                     }
                     else
                     {
-                        <a href="~/Home/QuitarPromocion/@h.Id">Quitar promoción</a>
+                        <a href="~/Admin/Home/QuitarPromocion/@h.Id">Quitar promoción</a>
                     }
                 </span>
             </div>
         }
         
     }
-    <a class="fab" href="agregar.html">+</a>
+    <a class="fab" href="~/Admin/Home/Agregar">+</a>
 </section>
 

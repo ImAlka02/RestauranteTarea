@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<form>
+<form method="post" action="~/Admin/Home/AgregarPromocion">
     <h1>Agregar un descuento de promoción</h1>
     <input type="hidden" asp-for="Id" />
     <span>
@@ -14,17 +14,17 @@
     </span>
     <span>
         <label for="precio">Precio real:</label>
-        <input type="text" id="precio" required >
+        <input type="text" id="precio" required asp-for="Precio">
     </span>
     <span>
         <label for="promocion">Precio promoción:</label>
-        <input type="text" id="promocion" required>
+        <input type="text" id="promocion" required asp-for="PrecioPromo">
     </span>
-    <span class="error">Area de errores</span>
+    <span class="error">@Html.ValidationSummary(true)</span>
 
     <div class="botones">
         <input type="submit" value="Agregar" />
-        <a href="menu.html">
+        <a href="~/Admin/Home/Menu">
             <input type="button" value="Cancelar" />
         </a>
     </div>

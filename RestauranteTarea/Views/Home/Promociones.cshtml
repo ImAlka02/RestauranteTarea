@@ -2,22 +2,20 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-    <section class="menu1">
-        <img src="hamburguesas/@(Model.Id).png" />
+<section class="menu1" style="height:100%">
+        <img src="~/hamburguesas/@(Model.Id).png" />
         <div class="datos">
             <h3>
                 <del>@Model.Precio.ToString("c")</del>
-            <b>@Model.PrecioPromo.ToString("c")</b>
+            <b>@Model.PrecioPromo?.ToString("c")</b>
             </h3>
             <h2>@Model.Nombre</h2>
             <p>@Model.Descripcion</p>
         </div>
         <span>
-            <a href="~/Home/Promociones">&lt;</a>
-            <a href="~/Home/Promociones">&gt;</a>
+            <a href="~/Home/Promociones/@Model.IdNext">&lt;</a>
+        <a href="~/Home/Promociones/@Model.IdPrev">&gt;</a>
         </span>
-    </section>
+</section>
     
  
