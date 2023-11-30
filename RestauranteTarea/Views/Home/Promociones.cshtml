@@ -1,21 +1,64 @@
-﻿@model RestauranteTarea.Models.ViewModels.PromoViewModel
+﻿@using Newtonsoft.Json
+
+@model RestauranteTarea.Models.ViewModels.PromoViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<section class="menu1" style="height:100%">
-        <img src="~/hamburguesas/@(Model.Promocion.Id).png" />
+<section class="menu1" style="height:80%">
+        <img src="~/hamburguesas/" />
         <div class="datos">
             <h3>
-            <del>@Model.Promocion.Precio.ToString("c")</del>
-            <b>@Model.Promocion.PrecioPromo?.ToString("c")</b>
+            <del>Precio</del>
+            <b>PrecioPromo</b>
             </h3>
-        <h2>@Model.Promocion.Nombre</h2>
-        <p>@Model.Promocion.Descripcion</p>
+        <h2>Nombre</h2>
+        <p>Descripcion</p>
         </div>
         <span>
-            <a href="~/Home/Promociones/@Model.IdNext">&lt;</a>
-        <a href="~/Home/Promociones/@Model.IdPrev">&gt;</a>
+            <a href="~/Home/Promociones">&lt;</a>
+        <a href="~/Home/Promociones">&gt;</a>
         </span>
 </section>
+
+@{
+    var json = JsonConvert.SerializeObject(@Model.Promos);
+    var n = Model.Indice;
+}
+<script>
+    let arreglo = @Html.Raw(JsonConvert.SerializeObject(@Model.Promos));
+    let currentIndex = @n;
+    if (arreglo) {
+        let section = document.querySelector(".menu1");
+        let img = section.querySelector("img");
+        let Precio = section.querySelector("del");
+        let PrecioPromo = section.querySelector("b");
+        let Nombre = section.querySelector("h2");
+        let Descripcion = section.querySelector("p");
+
+
+        section.querySelector("span").addEventListener("click", function (e) {
+            if (e.target.tagName === ("A")) {
+                if (e.target.textContent === (">")) {
+                    currentIndex = (currentIndex + 1) % arreglo.length;
+                    e.target.href = `/Home/Promociones/${currentIndex}`
+                } else {
+                    currentIndex = (currentIndex - 1 + arreglo.length) % arreglo.length;
+                    e.target.href = `/Home/Promociones/${currentIndex}`
+                }
+                Formato(currentIndex);
+
+            }
+        });
+        Formato(currentIndex);
+        function Formato(n){
+            img.src = img.src + `${arreglo[n].Id}.png`;
+            Precio.textContent = "$" + `${arreglo[n].Precio}`;
+            PrecioPromo.textContent = "$" + `${arreglo[n].PrecioPromo}`;
+            Nombre.textContent = arreglo[n].Nombre;
+            Descripcion.textContent = arreglo[n].Descripcion;
+        }
+        
+    }
+</script>
     
  

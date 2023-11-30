@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RestauranteTarea.Models.Entities;
 using RestauranteTarea.Models.ViewModels;
 using RestauranteTarea.Repositories;
+using System.Text.Json.Serialization;
 
 namespace RestauranteTarea.Controllers
 {
@@ -48,22 +50,25 @@ namespace RestauranteTarea.Controllers
 
         public IActionResult Promociones(int Id)
         {
-            PromoViewModel vm = new PromoViewModel();
-            if(Id == 0)
+            var prop = menuRepository.GetAll().Where(x => x.PrecioPromocion != null).ToList();
+            if (prop.Count() == 0 )
             {
-                vm.Promos = (IEnumerable<PromoModel>)menuRepository.GetAll().Where(x=> x.PrecioPromocion != null)
-                    .Select(x=>new PromoModel()
-                    {
-                        Id =x.Id,
-                        Descripcion = x.Descripción,
-                        Nombre = x.Nombre,
-                        Precio = (decimal)x.Precio,
-                        PrecioPromo = (decimal?)x.PrecioPromocion
-                    }).ToList();
-                vm.Promocion = vm.Promos.FirstOrDefault();
-                vm.IdPrev = vm.Promos.Skip(1).FirstOrDefault().Id;
-                vm.IdPrev = vm.Promos.SkipLast(1).FirstOrDefault().Id;
+                return RedirectToAction("Index");
             }
+            PromoViewModel vm = new PromoViewModel()
+            {
+                Promos = prop
+                .Select(x => new PromoModel()
+                {
+                    Descripcion = x.Descripción,
+                    Id = x.Id,
+                    Nombre = x.Nombre,
+                    Precio = (decimal)x.Precio,
+                    PrecioPromo = (decimal?)x.PrecioPromocion
+                }),
+                Indice = Id != 0 ? Id : 0 
+            };
+            
             return View(vm);
         }
     }

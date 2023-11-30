@@ -1,0 +1,69 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model RestauranteTarea.Areas.Admin.Models.AdminAddMenuViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<form method="post" action="~/Admin/Home/AgregarMenu" enctype="multipart/form-data">
+    <h1>Agregar hamburguesa al menú</h1>
+    <span>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required asp-for="Nombre">
+    </span>
+
+    <span>
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" min="0" step="0.01" required asp-for="Precio">
+    </span>
+
+    <span>
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" required asp-for="Descripcion"></textarea>
+    </span>
+
+    <span>
+        <label for="clasificacion">Clasificación:</label>
+        <select id="clasificacion" asp-for="IdClasificacion"
+                asp-items="@(new SelectList(Model.Clasificaciones, "Id", "Nombre"))" required>
+            <option>Tendencias</option>
+        </select>
+    </span>
+
+    <span>
+        <label for="imagen">Imagen:</label>
+        <input type="file" id="imagen" accept="image/png" asp-for="Archivo" onchange="previewImagen()">
+        <img id="imagen-preview" src="~/images/burger.png">
+    </span>
+
+    <div class="botones">
+        <input type="submit" value="Agregar" />
+        <a href="~/Admin/Home/Menu">
+            <input type="button" value="Cancelar" />
+        </a>
+    </div>
+    @Html.ValidationSummary(true)
+</form>
+
+<script>
+
+    function previewImagen() {
+        const inputImagen = document.getElementById('imagen');
+        const imagenPreview = document.getElementById('imagen-preview');
+
+        const archivoImagen = inputImagen.files[0];
+
+        if (archivoImagen) {
+            const lector = new FileReader();
+
+            lector.onload = function (e) {
+                imagenPreview.src = e.target.result;
+                imagenPreview.style.display = 'block';
+            };
+
+            lector.readAsDataURL(archivoImagen);
+        } else {
+            imagenPreview.src = '#';
+            imagenPreview.style.display = 'none';
+        }
+    }
+</script>
+

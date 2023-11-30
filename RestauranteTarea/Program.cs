@@ -10,6 +10,7 @@ builder.Services.AddDbContext<NeatContext>(x => x.UseMySql("server=localhost;use
 
 builder.Services.AddTransient<MenuRepository>();
 builder.Services.AddTransient<Repository<Menu>>();
+builder.Services.AddTransient<Repository<Clasificacion>>();
 
 var app = builder.Build();
 
