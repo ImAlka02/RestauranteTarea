@@ -3,14 +3,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <section class="menu1" style="height:100%">
-        <img src="~/hamburguesas/@(Model.Id).png" />
+        <img src="~/hamburguesas/@(Model.Promocion.Id).png" />
         <div class="datos">
             <h3>
-                <del>@Model.Precio.ToString("c")</del>
-            <b>@Model.PrecioPromo?.ToString("c")</b>
+            <del>@Model.Promocion.Precio.ToString("c")</del>
+            <b>@Model.Promocion.PrecioPromo?.ToString("c")</b>
             </h3>
-            <h2>@Model.Nombre</h2>
-            <p>@Model.Descripcion</p>
+        <h2>@Model.Promocion.Nombre</h2>
+        <p>@Model.Promocion.Descripcion</p>
         </div>
         <span>
             <a href="~/Home/Promociones/@Model.IdNext">&lt;</a>

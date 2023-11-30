@@ -7,7 +7,7 @@ namespace RestauranteTarea.Controllers
 {
     public class HomeController : Controller
     {
-
+       
         public HomeController(Repository<Menu> RepoMenu, MenuRepository menuRepository)
         {
             repoMenu = RepoMenu;
@@ -49,34 +49,21 @@ namespace RestauranteTarea.Controllers
         public IActionResult Promociones(int Id)
         {
             PromoViewModel vm = new PromoViewModel();
-            var ListaPromo = menuRepository.GetAll().Where(x => x.PrecioPromocion != null && x.Id != Id);
-            var next = ListaPromo.Skip(1).Take(1).First();
-            var last = ListaPromo.Last();
-
             if(Id == 0)
             {
-                
-                var lol = menuRepository.GetAll().Where(x => x.PrecioPromocion != null).FirstOrDefault();
-                vm.Id = lol.Id;
-                vm.Nombre = lol.Nombre;
-                vm.PrecioPromo = (decimal?)lol.PrecioPromocion;
-                vm.Precio = (decimal)lol.Precio;
-                vm.Descripcion = lol.Descripción;
-                vm.IdPrev = last.Id;
-                vm.IdNext = next.Id;
-                return View(vm);
+                vm.Promos = (IEnumerable<PromoModel>)menuRepository.GetAll().Where(x=> x.PrecioPromocion != null)
+                    .Select(x=>new PromoModel()
+                    {
+                        Id =x.Id,
+                        Descripcion = x.Descripción,
+                        Nombre = x.Nombre,
+                        Precio = (decimal)x.Precio,
+                        PrecioPromo = (decimal?)x.PrecioPromocion
+                    }).ToList();
+                vm.Promocion = vm.Promos.FirstOrDefault();
+                vm.IdPrev = vm.Promos.Skip(1).FirstOrDefault().Id;
+                vm.IdPrev = vm.Promos.SkipLast(1).FirstOrDefault().Id;
             }
-            var Este = menuRepository.Get(Id);
-            vm.Id = Este.Id;
-            vm.Nombre = Este.Nombre;
-            vm.PrecioPromo = (decimal?)Este.PrecioPromocion;
-            vm.Precio = (decimal)Este.Precio;
-            vm.Descripcion = Este.Descripción;
-            vm.IdPrev = last.Id;
-            vm.IdNext = next.Id;
-
-
-
             return View(vm);
         }
     }
