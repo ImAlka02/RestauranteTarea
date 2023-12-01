@@ -288,5 +288,37 @@ namespace RestauranteTarea.Areas.Admin.Controllers
             return View(vm);
         }
 
+        public IActionResult EliminarMenu(int Id)
+        {
+            var prop = repoMenu.Get(Id);
+            if (prop == null)
+            {
+                return RedirectToAction("Menu");
+            }
+            AdminEliminarViewModel vm = new()
+            {
+                Id= prop.Id,
+                Nombre = prop.Nombre
+            };
+            return View(vm);
+        }
+        [HttpPost]
+        public IActionResult EliminarMenu(AdminEliminarViewModel vm)
+        {
+            if (vm == null)
+            {
+                return RedirectToAction("Menu");
+            }
+
+            var prop = repoMenu.Get(vm.Id);
+            repoMenu.Delete(prop);
+            var ruta = $"wwwroot/hamburguesas/{vm.Id}.png";
+            if (System.IO.File.Exists(ruta))
+            {
+               System.IO.File.Delete(ruta);
+            }
+            return RedirectToAction("Menu");
+        }
+
     }
 }
